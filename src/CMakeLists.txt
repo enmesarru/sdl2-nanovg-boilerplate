@@ -1,0 +1,7 @@
+set(HEADER_LIST "${PROJECT_SOURCE_DIR}/include/loader.h")
+
+add_library(binary_library loader.cpp ${HEADER_LIST}) # maybe static
+
+target_include_directories(binary_library PUBLIC ../include)
+
+target_compile_features(binary_library PUBLIC cxx_std_11)
