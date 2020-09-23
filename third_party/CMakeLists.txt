@@ -20,6 +20,8 @@ add_library(imgui ${SOURCES})
 #make sdl2 avaliable to imgui
 target_include_directories(imgui PUBLIC ${SDL2_INCLUDE_DIRS})
 
+target_link_libraries(imgui PUBLIC SDL2::SDL2)
+
 target_include_directories(imgui PUBLIC 
     ${PROJECT_SOURCE_DIR}/third_party/imgui 
     ${PROJECT_SOURCE_DIR}/third_party/imgui/examples)

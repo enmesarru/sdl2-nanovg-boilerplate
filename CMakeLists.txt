@@ -21,9 +21,11 @@ target_include_directories(binary_reverse PUBLIC ${OPENGL_INCLUDE_DIR})
 
 target_link_libraries(binary_reverse PRIVATE 
     binary_library 
-    ${SDL2_LIBRARIES} 
+    #${SDL2_LIBRARIES} 
     imgui 
     ${OPENGL_LIBRARIES})
+
+target_link_libraries(binary_reverse PUBLIC SDL2::SDL2)
 
 add_subdirectory(third_party)
 add_subdirectory(src)
