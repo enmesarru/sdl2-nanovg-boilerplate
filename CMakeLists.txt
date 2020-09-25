@@ -22,7 +22,8 @@ target_include_directories(binary_reverse PUBLIC ${OPENGL_INCLUDE_DIR})
 target_link_libraries(binary_reverse PRIVATE 
     binary_library 
     #${SDL2_LIBRARIES} 
-    imgui 
+    imgui
+    nanovg 
     ${OPENGL_LIBRARIES})
 
 target_link_libraries(binary_reverse PUBLIC SDL2::SDL2)

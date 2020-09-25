@@ -1,4 +1,18 @@
-set(SOURCES
+#NANOVG CONFIGURATION
+set(NANOVG_SOURCES 
+    ${PROJECT_SOURCE_DIR}/third_party/nanovg/src/fontstash.h
+    ${PROJECT_SOURCE_DIR}/third_party/nanovg/src/nanovg.h
+    ${PROJECT_SOURCE_DIR}/third_party/nanovg/src/nanovg_gl_utils.h
+    ${PROJECT_SOURCE_DIR}/third_party/nanovg/src/nanovg_gl.h
+    ${PROJECT_SOURCE_DIR}/third_party/nanovg/src/nanovg.c
+    ${PROJECT_SOURCE_DIR}/third_party/nanovg/src/stb_image.h
+    ${PROJECT_SOURCE_DIR}/third_party/nanovg/src/stb_truetype.h)
+
+add_library(nanovg ${NANOVG_SOURCES})
+target_include_directories(nanovg PUBLIC ${PROJECT_SOURCE_DIR}/third_party/nanovg/src/)
+
+# IMGUI_CONFIGURATION
+set(IMGUI_SOURCES
     ${PROJECT_SOURCE_DIR}/third_party/imgui/imconfig.h
     ${PROJECT_SOURCE_DIR}/third_party/imgui/imgui.h
     ${PROJECT_SOURCE_DIR}/third_party/imgui/imgui.cpp
@@ -16,7 +30,7 @@ set(SOURCES
     ${PROJECT_SOURCE_DIR}/third_party/imgui/examples/imgui_impl_opengl3.cpp
 )
 
-add_library(imgui ${SOURCES})
+add_library(imgui ${IMGUI_SOURCES})
 #make sdl2 avaliable to imgui
 target_include_directories(imgui PUBLIC ${SDL2_INCLUDE_DIRS})
 
