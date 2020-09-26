@@ -110,11 +110,8 @@ int main(int, char**)
 
     ImVec4 clear_color = ImVec4(0.45f, 0.55f, 0.60f, 1.00f);
     NVGcontext *vg = nvgCreateGL3(NVG_ANTIALIAS | NVG_STENCIL_STROKES | NVG_DEBUG);
-
-    int winWidth, winHeight;
-    float pxRatio;
-
-    SDL_GetWindowSize(window, &winWidth, &winHeight);
+    
+    float pxRatio = (float)WIDTH / (float)HEIGHT;
     // Main loop
     bool done = false;
     while (!done)
@@ -146,12 +143,24 @@ int main(int, char**)
             ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f / ImGui::GetIO().Framerate, ImGui::GetIO().Framerate);
             ImGui::End();
         }
-
         // Rendering
         ImGui::Render();
         glViewport(0, 0, (int)io.DisplaySize.x, (int)io.DisplaySize.y);
         glClearColor(clear_color.x, clear_color.y, clear_color.z, clear_color.w);
         glClear(GL_COLOR_BUFFER_BIT);
+        
+        {
+            // Render NanoVg
+            nvgBeginFrame(vg, WIDTH, HEIGHT, pxRatio);
+
+                nvgBeginPath(vg);
+                nvgRect(vg, 300,100, 120,30);
+                nvgFillColor(vg, nvgRGBA(255,192,0,255));
+                nvgFill(vg);
+            nvgEndFrame(vg);
+            // Nanovg
+        }
+
         ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
         SDL_GL_SwapWindow(window);
     }
