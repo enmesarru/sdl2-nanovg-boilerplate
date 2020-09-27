@@ -9,7 +9,7 @@ set(NANOVG_SOURCES
     ${PROJECT_SOURCE_DIR}/third_party/nanovg/src/stb_truetype.h)
 
 add_library(nanovg ${NANOVG_SOURCES})
-target_link_libraries(nanovg PUBLIC GLEW)
+# target_link_libraries(nanovg PUBLIC GLEW)
 target_include_directories(nanovg PUBLIC ${PROJECT_SOURCE_DIR}/third_party/nanovg/src/)
 
 # IMGUI_CONFIGURATION
