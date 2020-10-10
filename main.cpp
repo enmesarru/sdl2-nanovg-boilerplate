@@ -1,8 +1,3 @@
-// dear imgui: standalone example application for SDL2 + OpenGL
-// If you are new to dear imgui, see examples/README.txt and documentation at the top of imgui.cpp.
-// (SDL is a cross-platform general purpose library for handling windows, inputs, OpenGL/Vulkan/Metal graphics context creation, etc.)
-// (GL3W is a helper library to access OpenGL functions since there is no standard header to access modern OpenGL functions easily. Alternatives are GLEW, Glad, etc.)
-
 #include "imgui.h"
 #include "imgui_impl_sdl.h"
 #include "imgui_impl_opengl3.h"
@@ -41,7 +36,7 @@ using namespace gl;
 int main(int, char**)
 {
     constexpr unsigned int WIDTH = 1280;
-    constexpr unsigned int HEIGHT = 1280;
+    constexpr unsigned int HEIGHT = 768;
     if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_TIMER | SDL_INIT_GAMECONTROLLER) != 0)
     {
         printf("Error: %s\n", SDL_GetError());
@@ -112,13 +107,11 @@ int main(int, char**)
 
     ImVec4 clear_color = ImVec4(0.f, 0.f, 0.f, 1.00f);
     NVGcontext *vg = nvgCreateGL3(NVG_ANTIALIAS | NVG_STENCIL_STROKES | NVG_DEBUG);
-    
+
     float pxRatio = (float)WIDTH / (float)HEIGHT;
-    // Main loop
     bool done = false;
     int counter = 0;
-
-    Circle c {100, WIDTH / 2, HEIGHT /2};
+    Circle c {300, WIDTH / 2, HEIGHT /2};
     while (!done)
     {
         double time;
@@ -136,8 +129,8 @@ int main(int, char**)
         ImGui_ImplSDL2_NewFrame(window);
         ImGui::NewFrame();
 
-        ImGui::Begin("Load File");                          // Create a window called "Hello, world!" and append into it.
-        if (ImGui::Button("Button"))                            // Buttons return true when clicked (most widgets return true when edited/activated)
+        ImGui::Begin("Load File");
+        if (ImGui::Button("Button"))
             counter++;
         ImGui::SameLine();
         ImGui::Text("counter = %d", counter);
@@ -160,7 +153,21 @@ int main(int, char**)
             nvgFillColor(vg, nvgRGBA(255,192,0,255));
             nvgFill(vg);
         }
-        
+        auto segments = c.getSegments();
+        for (size_t i = 0; i < segments.size(); ++i) {
+            nvgBeginPath( vg );
+            if(i == segments.size() - 1) {
+                nvgMoveTo( vg, segments[0].first, segments[0].second );
+                nvgLineTo( vg, segments[i].first, segments[i].second );
+            }else {
+                nvgMoveTo( vg, segments[i].first, segments[i].second );
+                nvgLineTo( vg, segments[i+1].first, segments[i+1].second );
+            }
+            nvgStrokeWidth( vg, 2 );
+            nvgStrokeColor( vg, nvgRGBA( 0, 127, 0, 255 ) );
+            nvgStroke( vg );
+        } 
+
         nvgEndFrame(vg);
 
         ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
