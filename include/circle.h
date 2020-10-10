@@ -3,6 +3,7 @@
 
 #include <vector>
 #include "graphic.h"
+#include "nanovg.h"
 
 using vertices = std::vector<std::pair<float, float>>;
 class Circle: public Graphic
@@ -10,7 +11,7 @@ class Circle: public Graphic
 public:
     Circle(float radius, float x, float y);
     void move(float x, float y);
-    void draw();
+    void draw(NVGcontext& context);
     vertices& getSegments();
     float getRadius();
 private:

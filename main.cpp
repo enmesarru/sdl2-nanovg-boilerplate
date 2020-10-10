@@ -112,6 +112,7 @@ int main(int, char**)
     bool done = false;
     int counter = 0;
     Circle c {300, WIDTH / 2, HEIGHT /2};
+    
     while (!done)
     {
         double time;
@@ -145,29 +146,7 @@ int main(int, char**)
 
 
         nvgBeginFrame(vg, WIDTH, HEIGHT, 1.0);
-
-        for (auto &&s : c.getSegments())
-        {
-            nvgBeginPath(vg);
-            nvgCircle(vg, s.first, s.second, 2.f);
-            nvgFillColor(vg, nvgRGBA(255,192,0,255));
-            nvgFill(vg);
-        }
-        auto segments = c.getSegments();
-        for (size_t i = 0; i < segments.size(); ++i) {
-            nvgBeginPath( vg );
-            if(i == segments.size() - 1) {
-                nvgMoveTo( vg, segments[0].first, segments[0].second );
-                nvgLineTo( vg, segments[i].first, segments[i].second );
-            }else {
-                nvgMoveTo( vg, segments[i].first, segments[i].second );
-                nvgLineTo( vg, segments[i+1].first, segments[i+1].second );
-            }
-            nvgStrokeWidth( vg, 2 );
-            nvgStrokeColor( vg, nvgRGBA( 0, 127, 0, 255 ) );
-            nvgStroke( vg );
-        } 
-
+        c.draw(*vg);
         nvgEndFrame(vg);
 
         ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
