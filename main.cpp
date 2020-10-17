@@ -10,6 +10,7 @@
 #include "nanovg_gl_utils.h"
 
 #include "circle.h"
+#include "polygon.h"
 
 #if defined(IMGUI_IMPL_OPENGL_LOADER_GL3W)
 #include <GL/gl3w.h>            // Initialize with gl3wInit()
@@ -112,7 +113,7 @@ int main(int, char**)
     bool done = false;
     int counter = 0;
     Circle c {300, WIDTH / 2, HEIGHT /2};
-    
+    Polygon polygon{3, WIDTH / 2, HEIGHT /2};
     while (!done)
     {
         double time;
@@ -131,8 +132,10 @@ int main(int, char**)
         ImGui::NewFrame();
 
         ImGui::Begin("Load File");
-        if (ImGui::Button("Button"))
+        if (ImGui::Button("Button")) {
+            polygon.incrementSide();
             counter++;
+        }
         ImGui::SameLine();
         ImGui::Text("counter = %d", counter);
 
@@ -147,6 +150,7 @@ int main(int, char**)
 
         nvgBeginFrame(vg, WIDTH, HEIGHT, 1.0);
         c.draw(*vg);
+        polygon.draw(*vg);
         nvgEndFrame(vg);
 
         ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());

@@ -11,13 +11,14 @@ target_compile_features(binary_reverse PRIVATE cxx_std_17)
 #SDL2
 find_package(SDL2 REQUIRED)
 find_package(OpenGL REQUIRED)
-
+find_package(Boost REQUIRED)
 if(NOT OPENGL_FOUND) 
     message("ERROR: OpenGL not found")
 endif(NOT OPENGL FOUND)
 
 target_include_directories(binary_reverse PUBLIC ${SDL2_INCLUDE_DIRS})
 target_include_directories(binary_reverse PUBLIC ${OPENGL_INCLUDE_DIR})
+target_include_directories(binary_reverse PUBLIC ${Boost_INCLUDE_DIRS})
 
 target_link_libraries(binary_reverse PRIVATE 
     binary_library 

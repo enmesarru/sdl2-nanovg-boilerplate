@@ -5,7 +5,6 @@
 #include "graphic.h"
 #include "nanovg.h"
 
-using vertices = std::vector<std::pair<float, float>>;
 class Circle: public Graphic
 {
 public:

@@ -3,6 +3,7 @@
 
 #include "nanovg.h"
 constexpr double pi = 3.14159265358979323846;
+using vertices = std::vector<std::pair<float, float>>;
 
 class Graphic
 {
