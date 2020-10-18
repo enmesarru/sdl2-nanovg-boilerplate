@@ -135,7 +135,20 @@ int main(int, char**)
         if (ImGui::Button("Button")) {
             polygon.incrementSide();
             counter++;
+        } 
+        if(ImGui::Button("Scale Up")) {
+            polygon.scaleUp();
         }
+
+        if(ImGui::Button("Scale Down")) {
+            polygon.scaleDown();
+        }
+
+        if(ImGui::Button("Rotate")) {
+            polygon.rotate();
+        }
+
+
         ImGui::SameLine();
         ImGui::Text("counter = %d", counter);
 

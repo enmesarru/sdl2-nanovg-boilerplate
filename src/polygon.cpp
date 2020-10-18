@@ -2,16 +2,31 @@
 
 #include <cmath>
 
-
-
-double degreeToRadian(double degree) 
-{ 
-    return (degree * (180 / pi)); 
-} 
+std::pair<float, float> rotateByAngle(
+    std::pair<float, float> point, 
+    std::pair<float, float> origin, 
+    float angle)
+{
+    auto translated = std::make_pair(point.first - origin.first,  point.second - origin.second);
+    auto rotated = std::make_pair
+    (
+        translated.first * std::cos(angle) - translated.second * std::sin(angle),
+        translated.first * std::sin(angle) + translated.second * std::cos(angle)
+    );
+    return std::make_pair(
+        rotated.first + origin.first,
+        rotated.second + origin.second
+    );
+}
 
 Polygon::Polygon(int _numberOfSize, float _x, float _y)
-    : numberOfSide(_numberOfSize), x(_x), y(_y)
+    : numberOfSide(_numberOfSize), x(_x), y(_y), scale(100), angle(22)
 {
+    this->createSegments();
+}
+
+void Polygon::rotate() {
+    this->angle += 2;
     this->createSegments();
 }
 
@@ -19,15 +34,27 @@ void Polygon::createSegments() {
     if(this->segments.size() > 0) {
         this->segments.clear();
     }
-
+    auto origin = std::make_pair(x, y);
     for (double n = 0; n < this->numberOfSide; n++)
     {
-        double pos_x = 100 * std::sin(2 * pi * n / this->numberOfSide) + this->x;
-        double pos_y = 100 * std::cos(2 * pi  * n / this->numberOfSide) + this->y;
+        double pos_x = this->scale * std::sin(2 * pi * n / this->numberOfSide) + this->x;
+        double pos_y = this->scale * std::cos(2 * pi  * n / this->numberOfSide) + this->y;
         auto pair = std::make_pair(pos_x, pos_y);
-        this->segments.push_back(pair);
+        auto rotated = rotateByAngle(pair, origin, this->angle);
+        this->segments.push_back(rotated);
     }
 }
+
+void Polygon::scaleUp() {
+    this->scale += 10;
+    this->createSegments();
+}
+
+void Polygon::scaleDown() {
+    this->scale -= 10;
+    this->createSegments();
+}
+
 
 void Polygon::draw(NVGcontext &context)
 {
