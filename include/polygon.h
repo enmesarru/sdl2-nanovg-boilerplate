@@ -5,7 +5,7 @@
 #include "graphic.h"
 #include "nanovg.h"
 
-class Polygon: public Graphic
+class Polygon: public _Graphic
 {
 public:
     Polygon(int numberOfSide, float x, float y);

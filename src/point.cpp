@@ -17,8 +17,8 @@ void point::rotate(point origin, const float angle) {
     this->x -= origin.x;
     this->y -= origin.y;
     // rotate point
-    float xnew = this->x * c - this->y * s;
-    float ynew = this->x * s + this->y * c;
+    float xnew = this->x * c + this->y * s;
+    float ynew = -this->x * s + this->y * c;
 
     // translate point back:
     this->x = xnew + origin.x;

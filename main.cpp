@@ -1,7 +1,8 @@
+#include <stdio.h>
+#include <memory>
 #include "imgui.h"
 #include "imgui_impl_sdl.h"
 #include "imgui_impl_opengl3.h"
-#include <stdio.h>
 #include <SDL.h>
 #include <SDL_opengl.h>
 #define NANOVG_GL3_IMPLEMENTATION
@@ -9,8 +10,10 @@
 #include "nanovg_gl.h"
 #include "nanovg_gl_utils.h"
 
+#include "graphic.h"
 #include "circle.h"
 #include "polygon.h"
+
 
 #if defined(IMGUI_IMPL_OPENGL_LOADER_GL3W)
 #include <GL/gl3w.h>            // Initialize with gl3wInit()
@@ -106,7 +109,6 @@ int main(int, char**)
     ImGui_ImplSDL2_InitForOpenGL(window, gl_context);
     ImGui_ImplOpenGL3_Init(glsl_version);
 
-    ImVec4 clear_color = ImVec4(0.f, 0.f, 0.f, 1.00f);
     NVGcontext *vg = nvgCreateGL3(NVG_ANTIALIAS | NVG_STENCIL_STROKES | NVG_DEBUG);
 
     float pxRatio = (float)WIDTH / (float)HEIGHT;
@@ -114,8 +116,12 @@ int main(int, char**)
     int counter = 0;
     Circle c {300, WIDTH / 2, HEIGHT /2};
     Polygon polygon{3, WIDTH / 2, HEIGHT /2};
+
+    std::array<float, 3> colorCols;
+    ImVec4 clear_color = ImVec4(0.f, 0.f, 0.f, 1.00f);
     while (!done)
     {
+        clear_color = ImVec4(colorCols[0], colorCols[1], colorCols[2], 1.0f);
         double time;
         SDL_Event event;
         while (SDL_PollEvent(&event))
@@ -139,6 +145,7 @@ int main(int, char**)
         if(ImGui::Button("Scale Up")) {
             polygon.scaleUp();
         }
+        ImGui::ColorEdit4("Color", colorCols.data());
 
         if(ImGui::Button("Scale Down")) {
             polygon.scaleDown();
@@ -147,7 +154,7 @@ int main(int, char**)
         if(ImGui::Button("Rotate")) {
             polygon.rotate();
         }
-
+        
 
         ImGui::SameLine();
         ImGui::Text("counter = %d", counter);
@@ -164,6 +171,7 @@ int main(int, char**)
         nvgBeginFrame(vg, WIDTH, HEIGHT, 1.0);
         c.draw(*vg);
         polygon.draw(*vg);
+        polygon.rotate();
         nvgEndFrame(vg);
 
         ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());

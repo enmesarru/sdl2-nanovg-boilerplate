@@ -5,7 +5,7 @@
 #include "graphic.h"
 #include "nanovg.h"
 
-class Circle: public Graphic
+class Circle: public _Graphic
 {
 public:
     Circle(float radius, float x, float y);

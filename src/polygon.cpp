@@ -9,7 +9,7 @@ Polygon::Polygon(int _numberOfSize, float _x, float _y)
 }
 
 void Polygon::rotate() {
-    this->angle += 2;
+    this->angle += .2;
     this->createSegments();
 }
 
