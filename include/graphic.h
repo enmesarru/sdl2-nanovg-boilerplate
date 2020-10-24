@@ -2,8 +2,9 @@
 #define __SHAPE_H_
 
 #include "nanovg.h"
+#include "point.h"
 constexpr double pi = 3.14159265358979323846;
-using vertices = std::vector<std::pair<float, float>>;
+using vertices = std::vector<point>;
 
 class Graphic
 {
