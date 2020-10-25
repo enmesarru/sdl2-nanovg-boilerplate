@@ -4,3 +4,6 @@
 [submodule "third_party/nanovg"]
 	path = third_party/nanovg
 	url = https://github.com/memononen/nanovg
+[submodule "third_party/googletest"]
+	path = third_party/googletest
+	url = https://github.com/google/googletest.git
