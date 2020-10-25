@@ -1,10 +1,15 @@
-#include "point.h"
 #include <math.h>
+#include "point.h"
 
 point::point(float _x, float _y)
     : x(_x), y(_y)
 {
 }
+
+point::point()
+{
+}
+
 
 point::~point()
 {
@@ -23,4 +28,8 @@ void point::rotate(point origin, const float angle) {
     // translate point back:
     this->x = xnew + origin.x;
     this->y = ynew + origin.y;
+}
+
+bool point::operator <(const point &p) const {
+	return x < p.x || (x == p.x && y < p.y);
 }

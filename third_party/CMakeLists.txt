@@ -43,3 +43,5 @@ target_include_directories(imgui PUBLIC
 
 target_compile_definitions(imgui PUBLIC 
     IMGUI_IMPL_OPENGL_LOADER_CUSTOM=<SDL_opengl.h>  GL_GLEXT_PROTOTYPES=1)
+
+add_subdirectory(googletest)

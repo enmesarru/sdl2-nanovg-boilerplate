@@ -31,6 +31,7 @@ target_link_libraries(binary_reverse PUBLIC SDL2::SDL2)
 
 add_subdirectory(third_party)
 add_subdirectory(src)
+add_subdirectory(tests)
 
 set(CPACK_PROJECT_NAME ${PROJECT_NAME})
 set(CPACK_PROJECT_VERSION ${PROJECT_VERSION})
