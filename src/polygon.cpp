@@ -1,6 +1,8 @@
+#include <cmath>
+#include <algorithm>
+
 #include "polygon.h"
 
-#include <cmath>
 
 Polygon::Polygon(int _numberOfSize, float _x, float _y)
     : numberOfSide(_numberOfSize), x(_x), y(_y), scale(100), angle(22)
@@ -9,7 +11,7 @@ Polygon::Polygon(int _numberOfSize, float _x, float _y)
 }
 
 void Polygon::rotate() {
-    this->angle += .2;
+    this->angle += .02;
     this->createSegments();
 }
 
@@ -26,6 +28,23 @@ void Polygon::createSegments() {
         segment.rotate(origin, this->angle);
         this->segments.push_back(segment);
     }
+}
+
+void Polygon::boundingBox() {
+    auto max_x = std::minmax_element(this->segments.begin(), this->segments.end(), 
+    [](const point& f, const point& s) {
+        return f.x < s.x;
+    });
+
+    auto max_y = std::minmax_element(this->segments.begin(), this->segments.end(), 
+    [](const point& f, const point& s) {
+        return f.y < s.y;
+    });
+
+    _boundingBox.x = this->x;
+    _boundingBox.y = this->y;
+    _boundingBox.w = max_x.second->x - max_x.first->x;
+    _boundingBox.h = max_y.second->y - max_y.first->y;
 }
 
 void Polygon::scaleUp() {
@@ -67,6 +86,13 @@ void Polygon::draw(NVGcontext &context)
         nvgStrokeColor(&context, nvgRGBA(241, 115, 0, 255));
         nvgStroke(&context);
     }
+
+    // smallest surrounding rectangle"
+    nvgBeginPath(&context);
+    auto [x, y, w, h] = _boundingBox;
+    nvgRect(&context, x - (w / 2), y - (h / 2), w, h);
+    nvgFillColor(&context, nvgRGBA(255,255,255,50));
+    nvgFill(&context);
 }
 
 void Polygon::move(float x, float y)

@@ -13,6 +13,8 @@ Circle::Circle(float _radius, float _x, float _y)
     }
 }
 
+void Circle::boundingBox() {}
+
 void Circle::draw(NVGcontext &context)
 {
     for (auto &&s : segments)

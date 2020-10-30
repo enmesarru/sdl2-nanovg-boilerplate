@@ -11,6 +11,7 @@ public:
     Circle(float radius, float x, float y);
     void move(float x, float y);
     void draw(NVGcontext& context);
+    void boundingBox();
     vertices& getSegments();
     float getRadius();
 private:

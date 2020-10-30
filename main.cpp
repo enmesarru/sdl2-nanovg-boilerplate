@@ -172,6 +172,7 @@ int main(int, char**)
         c.draw(*vg);
         polygon.draw(*vg);
         polygon.rotate();
+        polygon.boundingBox();
         nvgEndFrame(vg);
 
         ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());

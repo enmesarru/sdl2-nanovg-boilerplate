@@ -11,6 +11,7 @@ public:
     Polygon(int numberOfSide, float x, float y);
     void move(float x, float y);
     void draw(NVGcontext& context);
+    void boundingBox();
     void incrementSide();
     vertices& getSegments();
     void scaleUp();
